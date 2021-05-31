@@ -39,27 +39,12 @@ public class PlayerController : MonoBehaviour
   void Start()
   {
 
+    Managers.Input.KeyAction -= OnKeyboard;
+    Managers.Input.KeyAction += OnKeyboard;
   }
 
-  //GameObject (Player)
-  //Transform
-  //PlayerController (*)
-
-  float _yAngle = 0.0f;
-  void Update()
+  void OnKeyboard()
   {
-    // _yAngle += Time.deltaTime * 100.0f;
-
-    //절대 회전값
-    // transform.eulerAngles = new Vector3(0.0f, _yAngle, 0.0f);
-
-    // +- delta
-    // transform.Rotate(new Vector3(0.0f, Time.deltaTime * 100.0f, 0.0f));
-
-    // 3개의 좌표만 사용하면 짐벌락 문제
-
-    // transform.rotation = Quaternion.Euler(new Vector3(0.0f, _yAngle, 0.0f));
-
     if (Input.GetKey(KeyCode.W))
     {
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
