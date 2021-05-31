@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
   void Start()
   {
 
+    // 실수로 다른 곳에서 OnKeyboard를 이미 등록했다면 두번 등록이 되기 때문에 그것을 방지하기 위하여 한번 빼고 시작하는것이다.
     Managers.Input.KeyAction -= OnKeyboard;
     Managers.Input.KeyAction += OnKeyboard;
   }
