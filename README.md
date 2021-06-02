@@ -23,3 +23,16 @@ PopupUI : 게임 진행 시 팝업으로 뜨고 사라지는 Dialog식 UI들
 SceneUI : 게임 진행 시 설정창이나 인벤토리와 같은 UI
 
 PopupUI 활성화 시 순서(sorting order : 화면에 보여지는 순서 )를 관리해준다. UI를 생성 혹은 삭제등을 해주는 Manager이다.
+
+### SceneManagerEx.cs
+
+> 유니티에 이미 SceneManager라는 이름이 예약되있기 때문에 이름을 조금 바꾼것이다.
+
+씬을 관리하는 매니저이다.
+기존에 존재하던 SceneManager의 기능들을 매핑하여 다시 구현을 하여서 하나의 Manager에서 관리하도록 해주었습니다.
+
+### SoundManager.cs
+
+사운드를 관리하는 매니저이다.
+
+사운드를 내는 AudioSource같은 경우 특정 오브젝트에 붙이게되면 오브젝트가 비활성화되거나 삭제될때 더이상 소리를 못내거나 접근할 수 없기 때문에 사운드를 관리할 매니저가 필요하다.
