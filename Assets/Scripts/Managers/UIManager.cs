@@ -1,12 +1,64 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager
 {
-  int _order = 0;
+  // Popup끼리의 order
+  int _order = 10;
 
   Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+  UI_Scene _sceneUI = null;
+
+  public GameObject Root
+  {
+    get
+    {
+      GameObject root = GameObject.Find("@UI_Root");
+      if (root == null)
+        root = new GameObject { name = "@UI_Root" };
+      return root;
+    }
+  }
+
+  // 외부에서 Pop창이 열어질때 Canvas의 우선순위를 정해줌.
+  public void SetCanvas(GameObject go, bool sort = true)
+  {
+    Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+    // canvas 안에 canvas가 있을때 부모가 어떤 값을 가지던 자신의 sortingorder값을 가짐
+    canvas.overrideSorting = true;
+
+    if (sort)
+    {
+      canvas.sortingOrder = (_order);
+      _order++;
+    }
+    else
+    {
+      canvas.sortingOrder = 0;
+    }
+  }
+
+  public T ShowSceneUI<T>(string name = null) where T : UI_Scene
+  {
+    //string을 안넣었을경우 Type으로 받아온다.
+    //Type과 string을 일치 시켰기때문에 가능함.
+    // ex ) UI_Button 프리팹에 붙어있는 스크립트는 UI_Button 
+    if (string.IsNullOrEmpty(name))
+      name = typeof(T).Name;
+
+
+    GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
+    // 혹시라도 Prefab에 컴포넌트를 안붙여놨을경우
+    T sceneUI = Util.GetOrAddComponent<T>(go);
+    _sceneUI = sceneUI;
+
+    go.transform.SetParent(Root.transform);
+
+    return sceneUI;
+  }
 
   public T ShowPopupUI<T>(string name = null) where T : UI_Popup
   {
@@ -20,6 +72,9 @@ public class UIManager
     // 혹시라도 Prefab에 컴포넌트를 안붙여놨을경우
     T popup = Util.GetOrAddComponent<T>(go);
     _popupStack.Push(popup);
+
+    go.transform.SetParent(Root.transform);
+
     return popup;
   }
 

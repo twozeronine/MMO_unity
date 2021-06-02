@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
 
     // TEMP
     UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
-
-    Managers.UI.ClosePopupUI(ui);
   }
 
   public enum PlayerState
