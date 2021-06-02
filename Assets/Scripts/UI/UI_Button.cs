@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Button : MonoBehaviour
+public class UI_Button : UI_Base
 {
-  Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
+
   enum Buttons
   {
     PointButton
@@ -18,30 +19,34 @@ public class UI_Button : MonoBehaviour
     ScoreText
   }
 
+  enum GameObjects
+  {
+    TestObject,
+  }
+
+  enum Images
+  {
+    ItemIcon,
+  }
+
   private void Start()
   {
     Bind<Button>(typeof(Buttons));
     Bind<Text>(typeof(Texts));
-  }
+    Bind<GameObject>(typeof(GameObjects));
+    Bind<Image>(typeof(Images));
 
-  void Bind<T>(Type type) where T : UnityEngine.Object
-  {
-    // Enum 타입에서 이름을 string으로 얻어옴
-    string[] names = Enum.GetNames(type);
-    // Enum에서 선언한 갯수만큼 object배열을 만듬
-    UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
-    // 해당 배열을 딕셔너리에 넣음 나중에 Type을 통해서 배열 접근 가능.
-    _objects.Add(typeof(T), objects);
 
-    for (int i = 0; i < names.Length; i++)
-    {
-      objects[i] = Util.FindChild<T>(gameObject, names[i], true);
-    }
+    GetButton((int)Buttons.PointButton).gameObject.AddUIEvent(OnButtonClicked);
+
+    GameObject go = GetImage((int)Images.ItemIcon).gameObject;
+    AddUIEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, Define.UIEvent.Drag);
   }
 
   int _score = 0;
-  public void OnButtonClicked()
+  public void OnButtonClicked(PointerEventData data)
   {
     _score++;
+    Get<Text>((int)Texts.ScoreText).text = $"점수 : {_score}";
   }
 }
