@@ -484,6 +484,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnityChan
       objectReference: {fileID: 0}
+    - target: {fileID: 2351067089948361750, guid: 7872875d70851604a88806fb9982cfea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2351067089948399670, guid: 7872875d70851604a88806fb9982cfea, type: 3}
       propertyPath: m_RootOrder
       value: 5
