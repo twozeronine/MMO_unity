@@ -17,9 +17,6 @@ public class PlayerController : MonoBehaviour
     // 실수로 다른 곳에서 Action을 이미 등록했다면 두번 등록이 되기 때문에 그것을 방지하기 위하여 한번 빼고 시작하는것이다.
     Managers.Input.MouseAction -= OnMouseClicked;
     Managers.Input.MouseAction += OnMouseClicked;
-
-    // TEMP
-    Managers.UI.ShowSceneUI<UI_Inven>();
   }
 
   public enum PlayerState

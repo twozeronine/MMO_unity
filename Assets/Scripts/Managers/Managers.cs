@@ -9,11 +9,13 @@ public class Managers : MonoBehaviour
 
   InputManager _input = new InputManager();
   ResourceManager _resource = new ResourceManager();
+  SceneManagerEx _scene = new SceneManagerEx();
   UIManager _ui = new UIManager();
 
   //Input은 Managers.cs 인스턴스의 _input을 불러오는 프로퍼티이다. (싱글톤 불러다 주는 static 함수와 같은 역할. 프로퍼티로 구현한 것 뿐이다.)
   public static InputManager Input { get { return Instance._input; } }
   public static ResourceManager Resource { get { return Instance._resource; } }
+  public static SceneManagerEx Scene { get { return Instance._scene; } }
   public static UIManager UI { get { return Instance._ui; } }
   void Start()
   {
