@@ -2,36 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 1. 위치 벡터
-// 2. 방향 벡터
-struct MyVector
-{
-  public float x;
-  public float y;
-  public float z;
 
-  //          +
-  //     +    +
-  // +--------+
-  public float magnitude { get { return Mathf.Sqrt(x * x + y * y + z * z); } }
-  public MyVector normailzed { get { return new MyVector(x / magnitude, y / magnitude, z / magnitude); } }
-
-  public MyVector(float x, float y, float z) { this.x = x; this.y = y; this.z = z; }
-
-  public static MyVector operator +(MyVector a, MyVector b)
-  {
-    return new MyVector(a.x + b.x, a.y + b.y, a.z + b.z);
-  }
-  public static MyVector operator -(MyVector a, MyVector b)
-  {
-    return new MyVector(a.x - b.x, a.y - b.y, a.z - b.z);
-  }
-
-  public static MyVector operator *(MyVector a, float d)
-  {
-    return new MyVector(a.x * d, a.y * d, a.z * d);
-  }
-}
 public class PlayerController : MonoBehaviour
 {
   [SerializeField]
@@ -46,6 +17,8 @@ public class PlayerController : MonoBehaviour
     // 실수로 다른 곳에서 Action을 이미 등록했다면 두번 등록이 되기 때문에 그것을 방지하기 위하여 한번 빼고 시작하는것이다.
     Managers.Input.MouseAction -= OnMouseClicked;
     Managers.Input.MouseAction += OnMouseClicked;
+
+    Managers.Resource.Instantiate("UI/UI_Button");
   }
 
   public enum PlayerState
