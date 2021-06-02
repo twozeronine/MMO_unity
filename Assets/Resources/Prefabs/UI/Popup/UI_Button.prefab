@@ -308,19 +308,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6002121572969149828}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2466530998907708427}
-        m_TargetAssemblyTypeName: UI_Button, Assembly-CSharp
-        m_MethodName: OnButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7680312378423032572
 GameObject:
   m_ObjectHideFlags: 0
