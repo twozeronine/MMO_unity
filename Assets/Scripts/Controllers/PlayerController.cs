@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,15 +36,25 @@ public class PlayerController : MonoBehaviour
   {
     Vector3 dir = _destPos - transform.position;
     // 도착
-    if (dir.magnitude < 0.0001f)
+    if (dir.magnitude < 0.1f)
     {
       _state = PlayerState.Idle;
     }
     else
     {
+      // TODO
+      NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
       float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
-      transform.position += dir.normalized * moveDist;
+      nma.Move(dir.normalized * moveDist);
 
+      Debug.DrawRay(transform.position + Vector3.up * 0.5f, dir.normalized, Color.magenta);
+      if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Block")))
+      {
+        _state = PlayerState.Idle;
+        return;
+      }
+
+      // transform.position += dir.normalized * moveDist;
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 20 * Time.deltaTime);
     }
 
@@ -79,7 +89,7 @@ public class PlayerController : MonoBehaviour
   {
     if (_state == PlayerState.Die) return;
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
+    // Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
 
     LayerMask mask = LayerMask.GetMask("Wall");
 
