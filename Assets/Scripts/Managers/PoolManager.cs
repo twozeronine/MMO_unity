@@ -52,6 +52,11 @@ public class PoolManager
         poolable = Create();
 
       poolable.gameObject.SetActive(true);
+
+      //DontDestroyOnLoad 해체 용도 ( 꼼수 )
+      if (parent == null)
+        poolable.transform.parent = Managers.Scene.CurrentScene.transform;
+
       poolable.transform.parent = parent;
       poolable.isUsing = false;
 
@@ -64,7 +69,7 @@ public class PoolManager
   Transform _root;
   public void Init()
   {
-    if (_root = null)
+    if (_root == null)
     {
       _root = new GameObject { name = "@Pool_Root" }.transform;
       Object.DontDestroyOnLoad(_root);
