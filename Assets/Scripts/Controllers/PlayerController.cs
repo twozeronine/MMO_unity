@@ -5,14 +5,14 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-  [SerializeField]
-  float _speed = 10.0f;
+  PlayerStat _stat;
   Vector3 _destPos;
 
 
 
   void Start()
   {
+    _stat = gameObject.GetComponent<PlayerStat>();
 
     // 실수로 다른 곳에서 Action을 이미 등록했다면 두번 등록이 되기 때문에 그것을 방지하기 위하여 한번 빼고 시작하는것이다.
     Managers.Input.MouseAction -= OnMouseClicked;
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     Die,
     Moving,
     Idle,
+    Skill,
   }
 
 
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
     {
       // TODO
       NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
-      float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
+      float moveDist = Mathf.Clamp(_stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
       nma.Move(dir.normalized * moveDist);
 
       Debug.DrawRay(transform.position + Vector3.up * 0.5f, dir.normalized, Color.magenta);
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
     // 애니메이션
     Animator anim = GetComponent<Animator>();
     // 현재 게임 상태에 대한 정보를 넘겨준다
-    anim.SetFloat("speed", _speed);
+    anim.SetFloat("speed", _stat.MoveSpeed);
   }
   void UpdateIdle()
   {
@@ -85,20 +86,30 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  int _mask = (1 << (int)Define.Layer.Ground) | (1 << (int)Define.Layer.Monster);
   void OnMouseClicked(Define.MouseEvent evt)
   {
     if (_state == PlayerState.Die) return;
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     // Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
 
-    LayerMask mask = LayerMask.GetMask("Wall");
+
 
     RaycastHit hit;
-    if (Physics.Raycast(ray, out hit, 100.0f, mask))
+    if (Physics.Raycast(ray, out hit, 100.0f, _mask))
     {
       _destPos = hit.point;
       _state = PlayerState.Moving;
       //Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
+
+      if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+      {
+        Debug.Log("MonsterClick");
+      }
+      else
+      {
+        Debug.Log("GroundClick");
+      }
     }
   }
 
