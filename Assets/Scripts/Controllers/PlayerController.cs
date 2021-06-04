@@ -8,10 +8,22 @@ public class PlayerController : MonoBehaviour
   PlayerStat _stat;
   Vector3 _destPos;
 
+  Texture2D _attackIcon;
+  Texture2D _handIcon;
 
+  enum CursorType
+  {
+    None,
+    Attack,
+    Hand,
+  }
+
+  CursorType _cursorType = CursorType.None;
 
   void Start()
   {
+    _attackIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Attack");
+    _handIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Hand");
     _stat = gameObject.GetComponent<PlayerStat>();
 
     // 실수로 다른 곳에서 Action을 이미 등록했다면 두번 등록이 되기 때문에 그것을 방지하기 위하여 한번 빼고 시작하는것이다.
@@ -83,6 +95,33 @@ public class PlayerController : MonoBehaviour
       case PlayerState.Idle:
         UpdateIdle();
         break;
+    }
+    UpdateMouseCursor();
+  }
+
+  void UpdateMouseCursor()
+  {
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+    RaycastHit hit;
+    if (Physics.Raycast(ray, out hit, 100.0f, _mask))
+    {
+      if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+      {
+        if (_cursorType != CursorType.Attack)
+        {
+          Cursor.SetCursor(_attackIcon, new Vector2(_attackIcon.width / 5, 0), CursorMode.Auto);
+          _cursorType = CursorType.Attack;
+        }
+      }
+      else
+      {
+        if (_cursorType != CursorType.Hand)
+        {
+          Cursor.SetCursor(_handIcon, new Vector2(_handIcon.width / 3, 0), CursorMode.Auto);
+          _cursorType = CursorType.Hand;
+        }
+      }
     }
   }
 

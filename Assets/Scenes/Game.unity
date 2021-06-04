@@ -7870,10 +7870,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1964902563, guid: 7872875d70851604a88806fb9982cfea, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2351067089948361750, guid: 7872875d70851604a88806fb9982cfea, type: 3}
       propertyPath: m_Name
       value: UnityChan
@@ -9499,26 +9495,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2351067089948361750, guid: 7872875d70851604a88806fb9982cfea, type: 3}
   m_PrefabInstance: {fileID: 1296685601}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1518754168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518754167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2443f610775e74a823fb18a605c4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _level: 0
-  _hp: 0
-  _maxHp: 0
-  _attack: 0
-  _defense: 0
-  _moveSpeed: 0
-  _exp: 0
-  _gold: 0
 --- !u!4 &1522731324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 409632, guid: 471c1eb32c770a54ea8a1c3ffbda1de6, type: 3}
