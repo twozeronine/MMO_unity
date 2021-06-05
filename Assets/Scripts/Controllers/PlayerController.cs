@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     _stat = gameObject.GetComponent<PlayerStat>();
 
     // 실수로 다른 곳에서 Action을 이미 등록했다면 두번 등록이 되기 때문에 그것을 방지하기 위하여 한번 빼고 시작하는것이다.
-    Managers.Input.MouseAction -= OnMouseClicked;
-    Managers.Input.MouseAction += OnMouseClicked;
+    Managers.Input.MouseAction -= OnMouseEvent;
+    Managers.Input.MouseAction += OnMouseEvent;
   }
 
   public enum PlayerState
@@ -63,7 +63,8 @@ public class PlayerController : MonoBehaviour
       Debug.DrawRay(transform.position + Vector3.up * 0.5f, dir.normalized, Color.magenta);
       if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Block")))
       {
-        _state = PlayerState.Idle;
+        if (Input.GetMouseButton(0) == false)
+          _state = PlayerState.Idle;
         return;
       }
 
@@ -101,6 +102,9 @@ public class PlayerController : MonoBehaviour
 
   void UpdateMouseCursor()
   {
+    if (Input.GetMouseButton(0))
+      return;
+
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
     RaycastHit hit;
@@ -125,31 +129,65 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  // ground와 monster 레이어에 대해서만 raycasting
   int _mask = (1 << (int)Define.Layer.Ground) | (1 << (int)Define.Layer.Monster);
-  void OnMouseClicked(Define.MouseEvent evt)
+  GameObject _lockTarget;
+  void OnMouseEvent(Define.MouseEvent evt)
   {
+    // 플레이어가 죽은 상태라면 retrun;
     if (_state == PlayerState.Die) return;
+
+    // Raycast를 받는 부분.
+    RaycastHit hit;
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, _mask);
     // Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
 
 
+    #region 리팩토링 전
+    // switch (evt)
+    // {
+    //   case Define.MouseEvent.PointerDown:
+    //     {
+    //       if (raycastHit)
+    //       {
+    //         _destPos = hit.point;
+    //         _state = PlayerState.Moving;
 
-    RaycastHit hit;
-    if (Physics.Raycast(ray, out hit, 100.0f, _mask))
+    //         if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+    //           _lockTarget = hit.collider.gameObject;
+    //         else
+    //           _lockTarget = null;
+    //       }
+    //     }
+    //     break;
+    //   case Define.MouseEvent.Press:
+    //     {
+    //       if (_lockTarget != null)
+    //         _destPos = _lockTarget.transform.position;
+    //       else if (raycastHit)
+    //         _destPos = hit.point;
+    //     }
+    //     break;
+    //   case Define.MouseEvent.PointerUp:
+    //     _lockTarget = null;
+    //     break;
+    // }
+    #endregion
+
+    if (raycastHit)
     {
-      _destPos = hit.point;
+      bool isHitMonster = hit.collider.gameObject.layer == (int)Define.Layer.Monster ? true : false;
       _state = PlayerState.Moving;
-      //Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
-
-      if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+      _lockTarget = evt switch
       {
-        Debug.Log("MonsterClick");
-      }
-      else
-      {
-        Debug.Log("GroundClick");
-      }
+        Define.MouseEvent.PointerDown => isHitMonster ? hit.collider.gameObject : null,
+        Define.MouseEvent.Press => _lockTarget,
+        Define.MouseEvent.PointerUp => _lockTarget,
+        _ => null,
+      };
     }
+    _destPos = _lockTarget == null ? hit.point : _lockTarget.transform.position;
   }
 
 }
