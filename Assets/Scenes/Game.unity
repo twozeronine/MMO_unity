@@ -12847,6 +12847,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400030, guid: abf604235fd5ccd4798c42e6b60b0ae4, type: 3}
   m_PrefabInstance: {fileID: 2002295189}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2013539723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2571995829025282095, guid: 05ec100cf9de722499dcdbc6e27e3236, type: 3}
+  m_PrefabInstance: {fileID: 1606782011781174722}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2013539724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013539723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adced5e4c2c8dcd4ca3293bae36e7faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destPos: {x: 0, y: 0, z: 0}
+  _state: 2
+  _lockTarget: {fileID: 0}
 --- !u!4 &2013539727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2571995829024916495, guid: 05ec100cf9de722499dcdbc6e27e3236, type: 3}
@@ -13734,6 +13754,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: babaecf49b3dd7c4ca65b0dcc0842bfb, type: 2}
+    - target: {fileID: 2571995829015931829, guid: 05ec100cf9de722499dcdbc6e27e3236, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2571995829024916495, guid: 05ec100cf9de722499dcdbc6e27e3236, type: 3}
       propertyPath: m_RootOrder
       value: 6
