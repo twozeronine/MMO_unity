@@ -12,6 +12,8 @@ public class CameraController : MonoBehaviour
 
   [SerializeField]
   GameObject _player = null;
+
+  public void SetPlayer(GameObject player) { _player = player; }
   void Start()
   {
 
@@ -21,6 +23,11 @@ public class CameraController : MonoBehaviour
   {
     if (_mode == Define.CameraMode.QuaterView)
     {
+      if (_player.IsValid() == false)
+      {
+        return;
+      }
+
       RaycastHit hit;
       //플레이어 위치에서 카메라 위치로 카메라 벡터의 크기 만큼의 Ray를 쏨
       if (Physics.Raycast(_player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
