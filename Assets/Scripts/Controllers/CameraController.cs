@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
 
       RaycastHit hit;
       //플레이어 위치에서 카메라 위치로 카메라 벡터의 크기 만큼의 Ray를 쏨
-      if (Physics.Raycast(_player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
+      if (Physics.Raycast(_player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Block")))
       {
         float dist = (hit.point - _player.transform.position).magnitude * 0.8f;
         // 플레이어와 벽 사이의 거리에서 0.8정도 곱한 거리에 카메라를 위치시킴.

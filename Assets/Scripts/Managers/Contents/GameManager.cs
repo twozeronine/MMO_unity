@@ -11,6 +11,8 @@ public class GameManager
   //   Dictionary<int, GameObject> _players = new Dictionary<int, GameObject>();
   HashSet<GameObject> _monsters = new HashSet<GameObject>();
 
+  public GameObject GetPlayer() => _player;
+
   public GameObject Spawn(Define.WorldObject type, string path, Transform parent = null)
   {
     GameObject go = Managers.Resource.Instantiate(path, parent);
