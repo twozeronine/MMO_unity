@@ -7959,7 +7959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2351067089948399670, guid: 7872875d70851604a88806fb9982cfea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.21
+      value: -15.74
       objectReference: {fileID: 0}
     - target: {fileID: 2351067089948399670, guid: 7872875d70851604a88806fb9982cfea, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7993,7 +7993,8 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8954260678827678352, guid: 7872875d70851604a88806fb9982cfea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7872875d70851604a88806fb9982cfea, type: 3}
 --- !u!1001 &1298821168
 PrefabInstance:
@@ -12867,6 +12868,8 @@ MonoBehaviour:
   _destPos: {x: 0, y: 0, z: 0}
   _state: 2
   _lockTarget: {fileID: 0}
+  _scanRange: 10
+  _attackRange: 2
 --- !u!4 &2013539727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2571995829024916495, guid: 05ec100cf9de722499dcdbc6e27e3236, type: 3}
